@@ -1,0 +1,5 @@
+C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GuiTestLib\bin\Debug\GuiTestLib.dll
+C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GuiTestLib\bin\Debug\GuiTestLib.pdb
+C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GuiTestLib\obj\Debug\GuiTestLib.csprojResolveAssemblyReference.cache
+C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GuiTestLib\obj\Debug\GuiTestLib.dll
+C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GuiTestLib\obj\Debug\GuiTestLib.pdb

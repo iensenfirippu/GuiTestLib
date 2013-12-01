@@ -29,7 +29,7 @@ namespace LibTester
 			Console.WriteLine("Welcome to LibTester...");
 			Console.WriteLine(SYSTEMMESSAGE);
 			
-			for (int i = 0; i < 50000; i++)
+			for (int i = 0; i < 1000; i++)
 			{
 				Console.WriteLine(i.ToString());
 				
@@ -68,11 +68,14 @@ namespace LibTester
 			
 			
 			Console.WriteLine("-- value dump --");
-			ResourceSnapshot snapshot;
-			while (snapshot = _tracker.Usage.GetNext())
+
+			//Console.WriteLine("BASE {0}:{1}", Format.Cpu(_tracker.Usage.Base.CpuUsage), Format.Ram(_tracker.Usage.Base.RamUsage));
+			foreach (ResourceSnapshot rs in _tracker.Usage.Snapshots)
 			{
-				Console.WriteLine("'{0}':{1}", _tracker.Usage.CpuToString(snapshot.CpuUsage), _tracker.Usage.RamToString(snapshot.RamUsage));
+				Console.WriteLine("{0}:{1}", Format.Cpu(rs.CpuUsage), Format.Ram(rs.RamUsage));
 			}
+
+			Console.ReadLine();
 		}
 
 		public void ManuelTest(string[] args)

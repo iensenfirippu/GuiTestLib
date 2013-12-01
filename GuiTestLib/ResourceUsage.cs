@@ -6,16 +6,15 @@ using System.Threading;
 namespace GuiTestLib
 {
 	public class ResourceUsage
-	{
-		private const ByteDenomination _denomination = ByteDenomination.MiB;
-		
+	{		
 		private PerformanceCounter _cpuCounter;
 		
-		private int _pointer = 0;
+		//private int _pointer = 0;
 		private int _count = 0;
-		private ResourceSnapshot _baseline;
+		//private ResourceSnapshot _base;
+
 		private List<ResourceSnapshot> _snapshots;
-		
+
 		private ResourceSnapshot _latest_snapshot;
 		private ResourceSnapshot _mincpu_snapshot;
 		private ResourceSnapshot _minram_snapshot;
@@ -26,16 +25,25 @@ namespace GuiTestLib
 		{
 			// Performance counter returns the overall cpu percentage load
 			_cpuCounter = new PerformanceCounter();
-			_cpuCounter.CategoryName = "Processor";
-			//_cpuCounter.CategoryName = "Process";
+
+			//_cpuCounter.CategoryName = "Processor";
+			_cpuCounter.CategoryName = "Process";
+
 			_cpuCounter.CounterName = "% Processor Time";
-			_cpuCounter.InstanceName = "_Total";
-			//_cpuCounter.InstanceName = Process.GetCurrentProcess().ProcessName;
+
+			//_cpuCounter.InstanceName = "_Total";
+			_cpuCounter.InstanceName = Process.GetCurrentProcess().ProcessName;
+
 			// first value returned is always 0, so we run NextValue once to ready the performancecounter
 			_cpuCounter.NextValue();
-			Thread.Sleep(20);
+			Thread.Sleep(1000);
+
+			/*_mincpu_snapshot = new ResourceSnapshot(DateTime.MinValue, float.MaxValue, float.MaxValue);
+			_minram_snapshot = _mincpu_snapshot;
+			_maxcpu_snapshot = new ResourceSnapshot(DateTime.MinValue, float.MinValue, float.MinValue);
+			_maxram_snapshot = _maxcpu_snapshot;*/
 			
-			_baseline = new ResourceSnapshot(DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
+			//_base = new ResourceSnapshot(DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
 			_snapshots = new List<ResourceSnapshot>();
 		}
 
@@ -44,25 +52,35 @@ namespace GuiTestLib
 		 
 		public void TakeSnapshot()
 		{
-			_latest_snapshot = new ResourceSnapshot(_baseline, _count, DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
+			//_latest_snapshot = new ResourceSnapshot(_base, _count, DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
+			_latest_snapshot = new ResourceSnapshot(null, _count, DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
 			_snapshots.Add(_latest_snapshot);
 			_count++;
-			
-			if (_latest_snapshot.Cpu < _mincpu_snapshot.Cpu) { _mincpu_snapshot = _latest_snapshot; }
-			if (_latest_snapshot.Ram < _minram_snapshot.Ram) { _minram_snapshot = _latest_snapshot; }
-			if (_latest_snapshot.Cpu > _maxcpu_snapshot.Cpu) { _maxcpu_snapshot = _latest_snapshot; }
-			if (_latest_snapshot.Ram > _maxram_snapshot.Ram) { _maxram_snapshot = _latest_snapshot; }
+
+			/*if (_count == 1)
+			{
+				_mincpu_snapshot = _latest_snapshot;
+				_minram_snapshot = _latest_snapshot;
+				_maxcpu_snapshot = _latest_snapshot;
+				_maxram_snapshot = _latest_snapshot;
+			}
+			else
+			{*/
+			if (_latest_snapshot.Cpu < CpuMin) { _mincpu_snapshot = _latest_snapshot; }
+			if (_latest_snapshot.Ram < RamMin) { _minram_snapshot = _latest_snapshot; }
+			if (_latest_snapshot.Cpu > CpuMax) { _maxcpu_snapshot = _latest_snapshot; }
+			if (_latest_snapshot.Ram > RamMax) { _maxram_snapshot = _latest_snapshot; }
+			//}
 		}
-		
+
+		//public ResourceSnapshot Base { get { return _base; } }
+		public List<ResourceSnapshot> Snapshots { get { return _snapshots; } }
 		public float Cpu { get { if (_latest_snapshot != null) { return _latest_snapshot.Cpu; } else { return 0; } } }
 		public float Ram { get { if (_latest_snapshot != null) { return _latest_snapshot.Ram; } else { return 0; } } }
-
-		public float CpuMin { get { if (_mincpu_snapshot != null) { return _mincpu_snapshot.Cpu; } else { return 0; } } }
-		public float RamMin { get { if (_minram_snapshot != null) { return _minram_snapshot.Ram; } else { return 0; } } }
-
-		public float CpuMax { get { if (_mincpu_snapshot != null) { return _mincpu_snapshot.Cpu; } else { return 0; } } }
-		public float RamMax { get { if (_minram_snapshot != null) { return _minram_snapshot.Ram; } else { return 0; } } }
-
+		public float CpuMin { get { if (_mincpu_snapshot != null) { return _mincpu_snapshot.Cpu; } else { return float.MaxValue; } } }
+		public float RamMin { get { if (_minram_snapshot != null) { return _minram_snapshot.Ram; } else { return float.MaxValue; } } }
+		public float CpuMax { get { if (_maxcpu_snapshot != null) { return _maxcpu_snapshot.Cpu; } else { return float.MinValue; } } }
+		public float RamMax { get { if (_maxram_snapshot != null) { return _maxram_snapshot.Ram; } else { return float.MinValue; } } }
 		public float CpuAvg
 		{
 			get
@@ -88,7 +106,7 @@ namespace GuiTestLib
 			}
 		}
 
-		public ResourceSnapshot GetNext()
+		/*public ResourceSnapshot GetNext()
 		{
 			_pointer++;
 			if (_pointer < (_snapshots.Count - 1))
@@ -99,28 +117,17 @@ namespace GuiTestLib
 			{
 				return null;
 			}
-		}
+		}*/
 
-		public string CpuToString(float cpu)
+		public void Stop()
 		{
-			Console.WriteLine(Process.GetCurrentProcess().ProcessName);
-			return "base=" + _baseline.Cpu + " " + (cpu.ToString("##0.##") + "%");
-		}
-
-		public string RamToString(float ram)
-		{
-			return (ram / (int)_denomination).ToString("##0.0##") + _denomination;
-		}
-		
-		public enum ByteDenomination
-		{
-			B = 1,
-			KB = 1000,
-			KiB = 1024,
-			MB = 1000000,
-			MiB = 1048576,
-			GB = 1000000000,
-			GiB = 1073741824,
+			if (Environment.ProcessorCount > 1)
+			{
+				foreach (ResourceSnapshot rs in _snapshots)
+				{
+					rs.RecalculateCpu();
+				}
+			}
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace GuiTestLib
 		{
 			_random = new GuiTestLib.Random();
 			_resourceusage = new ResourceUsage();
-			_timer = new Timer(100);
+			_timer = new Timer(1000);
 			_timer.Elapsed += new ElapsedEventHandler(Tick);
 			
 			_starttime = DateTime.Now;
@@ -28,7 +28,7 @@ namespace GuiTestLib
 			
 			_applicationname = application_name;
 			
-			_timer.Start();
+			_timer.Start();	
 		}
 		
 		public GuiTestLib.Random Random { get { return _random; } }
