@@ -17,7 +17,7 @@ namespace LibTester
 		private const string SYSTEMMESSAGE = "Please enter a command (1=randomString 2=randomNumber 3=randomDecimal 4=resourceUsage q=quit)";
 		private const string STRINGMESSAGE = "Please enter a size (1=normal 2=short 3=long)";
 
-		private GuiTracker _tracker;
+		private GuiTracker _tracker;//2
 
 		public Program()
 		{
