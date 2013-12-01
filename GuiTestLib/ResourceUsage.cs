@@ -32,7 +32,7 @@ namespace GuiTestLib
 			_cpuCounter.CounterName = "% Processor Time";
 
 			//_cpuCounter.InstanceName = "_Total";
-			_cpuCounter.InstanceName = Process.GetCurrentProcess().ProcessName;
+			_cpuCounter.InstanceName = Process.GetCurrentProcess().Id.ToString();
 
 			// first value returned is always 0, so we run NextValue once to ready the performancecounter
 			_cpuCounter.NextValue();

@@ -21,7 +21,7 @@ namespace GuiTestLib
 			_resourceusage = new ResourceUsage();
 			_timer = new Timer(1000);
 			_timer.Elapsed += new ElapsedEventHandler(Tick);
-			
+
 			_starttime = DateTime.Now;
 			//_endtime = null;
 			_executiontime = TimeSpan.Zero;
@@ -43,6 +43,7 @@ namespace GuiTestLib
 		public void Stop()
 		{
 			_timer.Stop();
+			_resourceusage.Stop();
 			_random.Disable();
 			_endtime = DateTime.Now;
 			_executiontime = _endtime - _starttime;

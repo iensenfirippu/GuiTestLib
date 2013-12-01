@@ -1,8 +1,3 @@
-/home/philip/MonoDevelop/GuiTest/src/GuiTestLib/obj/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
-/home/philip/MonoDevelop/GuiTest/src/GuiTestLib/bin/Debug/GuiTestLib.dll.mdb
-/home/philip/MonoDevelop/GuiTest/src/GuiTestLib/bin/Debug/GuiTestLib.dll
-/home/philip/MonoDevelop/GuiTest/src/GuiTestLib/obj/Debug/GuiTestLib.dll
-/home/philip/MonoDevelop/GuiTest/src/GuiTestLib/obj/Debug/GuiTestLib.dll.mdb
 /home/philip/MonoDevelop/GuiTestLib/GuiTestLib/obj/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
 /home/philip/MonoDevelop/GuiTestLib/GuiTestLib/bin/Debug/GuiTestLib.dll.mdb
 /home/philip/MonoDevelop/GuiTestLib/GuiTestLib/bin/Debug/GuiTestLib.dll

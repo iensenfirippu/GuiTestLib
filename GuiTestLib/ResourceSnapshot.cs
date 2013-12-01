@@ -45,7 +45,9 @@ namespace GuiTestLib
 
 		public void RecalculateCpu()
 		{
+			float pre = _cpu;
 			_cpu = (_cpu / Environment.ProcessorCount);
+			Console.WriteLine ("    {0} / {1} = {2}", pre, Environment.ProcessorCount, _cpu);
 		}
 		
 		/*public static implicit operator bool(ResourceSnapshot rs)
