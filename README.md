@@ -1,4 +1,4 @@
 GuiTestLib
 ==========
 
-Common library for the other projects in GuiTest
+Computer Science main project: Common library to test performance and effectivenes.
