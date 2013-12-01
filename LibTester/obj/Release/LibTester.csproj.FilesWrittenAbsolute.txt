@@ -1,0 +1,6 @@
+/home/philip/MonoDevelop/GuiTestLib/LibTester/obj/Release/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/home/philip/MonoDevelop/GuiTestLib/LibTester/bin/Release/LibTester.exe.mdb
+/home/philip/MonoDevelop/GuiTestLib/LibTester/bin/Release/LibTester.exe
+/home/philip/MonoDevelop/GuiTestLib/LibTester/obj/Release/LibTester.exe
+/home/philip/MonoDevelop/GuiTestLib/LibTester/obj/Release/LibTester.exe.mdb
+/home/philip/MonoDevelop/GuiTestLib/LibTester/bin/Release/GuiTestLib.dll
