@@ -21,7 +21,7 @@ namespace GuiTestLib
 		private ResourceSnapshot _maxcpu_snapshot;
 		private ResourceSnapshot _maxram_snapshot;
 		
-		public ResourceUsage()
+		public ResourceUsage(bool mono)
 		{
 			// Performance counter returns the overall cpu percentage load
 			_cpuCounter = new PerformanceCounter();
@@ -32,7 +32,15 @@ namespace GuiTestLib
 			_cpuCounter.CounterName = "% Processor Time";
 
 			//_cpuCounter.InstanceName = "_Total";
-			_cpuCounter.InstanceName = Process.GetCurrentProcess().Id.ToString();
+			if (mono)
+			{
+				_cpuCounter.InstanceName = Process.GetCurrentProcess().Id.ToString();
+			}
+			else
+			{
+				_cpuCounter.InstanceName = Process.GetCurrentProcess().ProcessName;
+			}
+			
 
 			// first value returned is always 0, so we run NextValue once to ready the performancecounter
 			_cpuCounter.NextValue();

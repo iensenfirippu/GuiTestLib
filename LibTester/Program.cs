@@ -17,11 +17,11 @@ namespace LibTester
 		private const string SYSTEMMESSAGE = "Please enter a command (1=randomString 2=randomNumber 3=randomDecimal 4=resourceUsage q=quit)";
 		private const string STRINGMESSAGE = "Please enter a size (1=normal 2=short 3=long)";
 
-		private GuiTracker _tracker;//2
+		private GuiTracker _tracker;
 
 		public Program()
 		{
-			_tracker = new GuiTracker("LibTester");
+			_tracker = new GuiTracker("LibTester", false);
 		}
 
 		public void AutomaticTest(string[] args)
@@ -29,7 +29,7 @@ namespace LibTester
 			Console.WriteLine("Welcome to LibTester...");
 			Console.WriteLine(SYSTEMMESSAGE);
 			
-			for (int i = 0; i < 50000; i++)
+			for (int i = 0; i < 1000; i++)
 			{
 				Console.WriteLine(i.ToString());
 				

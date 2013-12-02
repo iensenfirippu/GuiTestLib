@@ -7,9 +7,9 @@ namespace GuiTestLib
 {
 	public static class Format
 	{
-		private const ByteDenomination DENOMINATION = ByteDenomination.MiB;
+		private const ByteDenomination DENOMINATION = ByteDenomination.KB;
 		private const string CPUSTRINGFORMAT = "{0}%";
-		private const string RAMSTRINGFORMAT = "{0}MiB";
+		private const string RAMSTRINGFORMAT = "{0}KB";
 		private const string CPUFLOATFORMAT = "##0.##";
 		private const string RAMFLOATFORMAT = "##0.0##";
 

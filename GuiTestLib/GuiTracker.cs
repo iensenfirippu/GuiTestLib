@@ -15,10 +15,10 @@ namespace GuiTestLib
 		
 		private string _applicationname;
 
-		public GuiTracker(string application_name)
+		public GuiTracker(string application_name, bool mono)
 		{
 			_random = new GuiTestLib.Random();
-			_resourceusage = new ResourceUsage();
+			_resourceusage = new ResourceUsage(mono);
 			_timer = new Timer(1000);
 			_timer.Elapsed += new ElapsedEventHandler(Tick);
 

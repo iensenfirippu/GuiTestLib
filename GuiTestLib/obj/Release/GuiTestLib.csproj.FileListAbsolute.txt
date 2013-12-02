@@ -2,4 +2,3 @@ C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GuiTestLib\bin\Release\GuiTest
 C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GuiTestLib\bin\Release\GuiTestLib.pdb
 C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GuiTestLib\obj\Release\GuiTestLib.dll
 C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GuiTestLib\obj\Release\GuiTestLib.pdb
-C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GuiTestLib\obj\Release\GuiTestLib.csprojResolveAssemblyReference.cache
