@@ -116,10 +116,10 @@ namespace GuiTestLib
 
 		public enum Toolkit
 		{
-			MonoGtk,
-			Monowin,
-			DnetWin,
-			DnetWpf
+			MonoGtk = 1,
+			Monowin = 1,
+			DnetWin = 0,
+			DnetWpf = 0
 		}
 	}
 }

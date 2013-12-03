@@ -34,7 +34,8 @@ namespace GuiTestLib
 			//_cpuCounter.InstanceName = "_Total";
 
 			// Get process by id in mono, or name in .net
-			if (Type.GetType("Mono.Runtime") != null)
+			//if (Type.GetType("Mono.Runtime") != null)
+			if ((int)toolkit == 1)
 			{
 				_cpuCounter.InstanceName = Process.GetCurrentProcess().Id.ToString();
 			}

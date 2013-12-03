@@ -29,7 +29,7 @@ namespace LibTester
 			Console.WriteLine("Welcome to LibTester...");
 			Console.WriteLine(SYSTEMMESSAGE);
 			
-			for (int i = 0; i < 50000; i++)
+			for (int i = 0; i < 1000; i++)
 			{
 				Console.WriteLine(i.ToString());
 				
