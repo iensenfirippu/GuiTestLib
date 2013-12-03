@@ -31,7 +31,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="GuiTestLib">
-      <HintPath>..\GuiTestLib\bin\Release\GuiTestLib.dll</HintPath>
+      <HintPath>..\GuiTestLib\bin\Debug\GuiTestLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

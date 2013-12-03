@@ -21,18 +21,20 @@ namespace GuiTestLib
 		private ResourceSnapshot _maxcpu_snapshot;
 		private ResourceSnapshot _maxram_snapshot;
 		
-		public ResourceUsage(bool mono)
+		public ResourceUsage(GuiTracker.Toolkit toolkit)
 		{
-			// Performance counter returns the overall cpu percentage load
 			_cpuCounter = new PerformanceCounter();
 
 			//_cpuCounter.CategoryName = "Processor";
 			_cpuCounter.CategoryName = "Process";
 
 			_cpuCounter.CounterName = "% Processor Time";
-
+			
+			// returns the overall cpu percentage load
 			//_cpuCounter.InstanceName = "_Total";
-			if (mono)
+
+			// Get process by id in mono, or name in .net
+			if (Type.GetType("Mono.Runtime") != null)
 			{
 				_cpuCounter.InstanceName = Process.GetCurrentProcess().Id.ToString();
 			}
@@ -40,7 +42,6 @@ namespace GuiTestLib
 			{
 				_cpuCounter.InstanceName = Process.GetCurrentProcess().ProcessName;
 			}
-			
 
 			// first value returned is always 0, so we run NextValue once to ready the performancecounter
 			_cpuCounter.NextValue();

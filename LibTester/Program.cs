@@ -21,7 +21,7 @@ namespace LibTester
 
 		public Program()
 		{
-			_tracker = new GuiTracker("LibTester", false);
+			_tracker = new GuiTracker("LibTester", GuiTracker.Toolkit.MonoGtk);
 		}
 
 		public void AutomaticTest(string[] args)
@@ -29,7 +29,7 @@ namespace LibTester
 			Console.WriteLine("Welcome to LibTester...");
 			Console.WriteLine(SYSTEMMESSAGE);
 			
-			for (int i = 0; i < 1000; i++)
+			for (int i = 0; i < 50000; i++)
 			{
 				Console.WriteLine(i.ToString());
 				
