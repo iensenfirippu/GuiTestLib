@@ -7,7 +7,7 @@ namespace LibTester
 	{
 		public static void Main(string[] args)
 		{
-			Program p = new Program();
+			Program p = new Program(new GuiTracker("LibTester", GuiTracker.Framework.Dnet, GuiTracker.Toolkit.Gtk));
 			p.AutomaticTest(args);
 		}
 	}
@@ -16,12 +16,12 @@ namespace LibTester
 	{
 		private const string SYSTEMMESSAGE = "Please enter a command (1=randomString 2=randomNumber 3=randomDecimal 4=resourceUsage q=quit)";
 		private const string STRINGMESSAGE = "Please enter a size (1=normal 2=short 3=long)";
-
+				
 		private GuiTracker _tracker;
 
-		public Program()
+		public Program(GuiTracker tracker)
 		{
-			_tracker = new GuiTracker("LibTester", GuiTracker.Toolkit.MonoGtk);
+			_tracker = tracker;
 		}
 
 		public void AutomaticTest(string[] args)

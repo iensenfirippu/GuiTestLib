@@ -14,20 +14,22 @@ namespace GuiTestLib
 		private Timer _timer;
 
 		private string _application;
+		private Framework _framework;
 		private Toolkit _toolkit;
 		
 		private DateTime _starttime;
 		private DateTime _endtime;
 		private TimeSpan _executiontime;
 
-		public GuiTracker(string application, Toolkit toolkit)
+		public GuiTracker(string application, Framework framework, Toolkit toolkit)
 		{
 			_random = new GuiTestLib.Random();
-			_resourceusage = new ResourceUsage(toolkit);
+			_resourceusage = new ResourceUsage(framework);
 			_timer = new Timer(TICKTIME);
 			_timer.Elapsed += new ElapsedEventHandler(Tick);
 
 			_application = application;
+			_framework = framework;
 			_toolkit = toolkit;
 
 			_starttime = DateTime.Now;
@@ -64,7 +66,7 @@ namespace GuiTestLib
 			                   Environment.OSVersion.Platform == PlatformID.MacOSX)
 				? Environment.GetEnvironmentVariable("HOME")
 				: Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
-			savedirectory += "/GuiTest-Data/" + _application + "/" + _toolkit + "/";
+			savedirectory += "/GuiTest/Data/" + _application + "/" + _framework + "/" + _toolkit + "/";
 
 			// Create the save directory if it doesn't exist
 			if (!Directory.Exists(savedirectory)) { Directory.CreateDirectory(savedirectory); }
@@ -90,7 +92,8 @@ namespace GuiTestLib
 			
 			sb.Append("######################\n");
 			sb.Append("# Application: ").Append(_application).Append("\n");
-			sb.Append("# Platform: ").Append(_toolkit).Append("\n");
+			sb.Append("# Framework: ").Append(_framework).Append("\n");
+			sb.Append("# Toolkit: ").Append(_toolkit).Append("\n");
 			sb.Append("# --------------------\n");
 			sb.Append("# Started: ").Append(Format.DateAndTime(_starttime)).Append("\n");
 			sb.Append("# Ended: ").Append(Format.DateAndTime(_endtime)).Append("\n");
@@ -114,14 +117,17 @@ namespace GuiTestLib
 			return sb.ToString();
 		}
 
+		public enum Framework
+		{
+			Mono,
+			Dnet
+		}
+
 		public enum Toolkit
 		{
-			MonoGtk = 1,
-			Monowin = 1,
-			MonoWpf = 1,
-			DnetWin = 0,
-			DnetGtk = 0,
-			DnetWpf = 0
+			Gtk,
+			Win,
+			Wpf
 		}
 	}
 }

@@ -21,21 +21,21 @@ namespace GuiTestLib
 		private ResourceSnapshot _maxcpu_snapshot;
 		private ResourceSnapshot _maxram_snapshot;
 		
-		public ResourceUsage(GuiTracker.Toolkit toolkit)
+		public ResourceUsage(GuiTracker.Framework framework)
 		{
 			_cpuCounter = new PerformanceCounter();
 
+			// Checking for overall CPU usage
 			//_cpuCounter.CategoryName = "Processor";
-			_cpuCounter.CategoryName = "Process";
-
-			_cpuCounter.CounterName = "% Processor Time";
-			
-			// returns the overall cpu percentage load
+			//_cpuCounter.CounterName = "% Processor Time";
 			//_cpuCounter.InstanceName = "_Total";
 
+			// Checking for process CPU usage
+			_cpuCounter.CategoryName = "Process";
+			_cpuCounter.CounterName = "% Processor Time";
 			// Get process by id in mono, or name in .net
-			//if (Type.GetType("Mono.Runtime") != null)
-			if ((int)toolkit == 1)
+			//if (Type.GetType("Mono.Runtime") != null) // official code for checking for Mono runtime, from the mono developers. (didn't work)
+			if (framework == GuiTracker.Framework.Mono)
 			{
 				_cpuCounter.InstanceName = Process.GetCurrentProcess().Id.ToString();
 			}
@@ -44,7 +44,7 @@ namespace GuiTestLib
 				_cpuCounter.InstanceName = Process.GetCurrentProcess().ProcessName;
 			}
 
-			// first value returned is always 0, so we run NextValue once to ready the performancecounter
+			// first value returned is always 0, so we run NextValue once and sleep for a second to ready the performancecounter.				
 			_cpuCounter.NextValue();
 			Thread.Sleep(1000);
 
