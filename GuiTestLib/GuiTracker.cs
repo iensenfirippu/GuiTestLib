@@ -118,7 +118,9 @@ namespace GuiTestLib
 		{
 			MonoGtk = 1,
 			Monowin = 1,
+			MonoWpf = 1,
 			DnetWin = 0,
+			DnetGtk = 0,
 			DnetWpf = 0
 		}
 	}
