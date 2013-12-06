@@ -5,6 +5,7 @@ using System.Threading;
 
 namespace GuiTestLib
 {
+	[Serializable]
 	public class ResourceUsage
 	{		
 		private PerformanceCounter _cpuCounter;
@@ -35,7 +36,9 @@ namespace GuiTestLib
 			_cpuCounter.CounterName = "% Processor Time";
 			// Get process by id in mono, or name in .net
 			//if (Type.GetType("Mono.Runtime") != null) // official code for checking for Mono runtime, from the mono developers. (didn't work)
-			if (framework == GuiTracker.Framework.Mono)
+			//if (framework == GuiTracker.Framework.Mono)
+			if (Environment.OSVersion.Platform == PlatformID.Unix || 
+			    Environment.OSVersion.Platform == PlatformID.MacOSX)
 			{
 				_cpuCounter.InstanceName = Process.GetCurrentProcess().Id.ToString();
 			}
@@ -76,6 +79,7 @@ namespace GuiTestLib
 			}
 			else
 			{*/
+			// Consider moving to Stop()
 			if (_latest_snapshot.Cpu < CpuMin) { _mincpu_snapshot = _latest_snapshot; }
 			if (_latest_snapshot.Ram < RamMin) { _minram_snapshot = _latest_snapshot; }
 			if (_latest_snapshot.Cpu > CpuMax) { _maxcpu_snapshot = _latest_snapshot; }

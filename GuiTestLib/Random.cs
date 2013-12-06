@@ -3,6 +3,7 @@ using System.Text;
 
 namespace GuiTestLib
 {
+	[Serializable]
 	public class Random
 	{
 		private const int STRINGSIZE_SHORT = 8;

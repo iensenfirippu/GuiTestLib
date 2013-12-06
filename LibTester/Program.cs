@@ -1,5 +1,6 @@
 using System;
 using GuiTestLib;
+using System.Xml.Serialization;
 
 namespace LibTester
 {
@@ -11,7 +12,7 @@ namespace LibTester
 			p.AutomaticTest(args);
 		}
 	}
-	
+
 	class Program
 	{
 		private const string SYSTEMMESSAGE = "Please enter a command (1=randomString 2=randomNumber 3=randomDecimal 4=resourceUsage q=quit)";

@@ -2,6 +2,7 @@ using System;
 
 namespace GuiTestLib
 {
+	[Serializable]
 	public class ResourceSnapshot
 	{
 		//private ResourceSnapshot _baseline;
