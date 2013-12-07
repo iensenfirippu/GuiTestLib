@@ -7,12 +7,12 @@ namespace GuiTestLib
 {
 	public static class Format
 	{
-		private const ByteDenomination DENOMINATION = ByteDenomination.B;
+		private const ByteDenomination DENOMINATION = ByteDenomination.KB;
 		private const string CPUSTRINGFORMAT = "{0}%";
-		private const string RAMSTRINGFORMAT = "{0}B";
+		private const string RAMSTRINGFORMAT = "{0}KB";
 		private const string CPUFLOATFORMAT = "##0.##";
 		private const string CPUFLOATFORMAT_LONG = "00.00000";
-		private const string RAMFLOATFORMAT = "##0.0##";
+		private const string RAMFLOATFORMAT = "##0.###";
 
 		private const string DATEFORMAT = "yy-MM-dd HH:mm:ss";
 		private const string DURATIONFORMAT = "#0.0#";
