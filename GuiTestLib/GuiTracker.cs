@@ -195,15 +195,15 @@ namespace GuiTestLib
 			sb.Append("# Average CPU usage: ").Append(Format.Cpu(_resourceusage.CpuAvg)).Append("\n");
 			sb.Append("# Maximum CPU usage: ").Append(Format.Cpu(_resourceusage.CpuMax)).Append("\n");
 			sb.Append("# --------------------\n");
-			sb.Append("# Minimum RAM usage: ").Append(Format.Ram(_resourceusage.RamMin)).Append("\n");
-			sb.Append("# Average RAM usage: ").Append(Format.Ram(_resourceusage.RamAvg)).Append("\n");
-			sb.Append("# Maximum RAM usage: ").Append(Format.Ram(_resourceusage.RamMax)).Append("\n");
+			sb.Append("# Minimum RAM usage: ").Append(Format.RamDisplay(_resourceusage.RamMin)).Append("\n");
+			sb.Append("# Average RAM usage: ").Append(Format.RamDisplay(_resourceusage.RamAvg)).Append("\n");
+			sb.Append("# Maximum RAM usage: ").Append(Format.RamDisplay(_resourceusage.RamMax)).Append("\n");
 			sb.Append("######################\n\n");
 
 			foreach (ResourceSnapshot rs in _resourceusage.Snapshots)
 			{
 				sb.Append(Format.Duration(rs.TimeStamp - _starttime)).Append("\t");
-				sb.Append(Format.Cpu(rs.Cpu, true)).Append("\t").Append(rs.Ram).Append("\t\n");
+				sb.Append(Format.Cpu(rs.Cpu, true)).Append("\t").Append(Format.Ram(rs.Ram)).Append("\t\n");
 			}
 
 			return sb.ToString();

@@ -1,0 +1,4 @@
+C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GraphMakerLite\bin\Release\GraphMakerLite.exe
+C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GraphMakerLite\bin\Release\GraphMakerLite.pdb
+C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GraphMakerLite\obj\Release\GraphMakerLite.exe
+C:\Users\WinDevsAdmin\Documents\GitHub\GuiTestLib\GraphMakerLite\obj\Release\GraphMakerLite.pdb

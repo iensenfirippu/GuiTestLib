@@ -58,6 +58,7 @@ namespace GuiTestLib
 			
 			//_base = new ResourceSnapshot(DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
 			_snapshots = new List<ResourceSnapshot>();
+			TakeSnapshot();
 		}
 
 		private float getCurrentCpuUsage() { return _cpuCounter.NextValue(); }
@@ -135,6 +136,7 @@ namespace GuiTestLib
 
 		public void Stop()
 		{
+			TakeSnapshot();
 			if (Environment.ProcessorCount > 1)
 			{
 				foreach (ResourceSnapshot rs in _snapshots)

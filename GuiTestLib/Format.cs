@@ -26,9 +26,14 @@ namespace GuiTestLib
 
 		}
 
+		public static string RamDisplay(float ram)
+		{
+			return String.Format(RAMSTRINGFORMAT, Ram(ram));
+		}
+
 		public static string Ram(float ram)
 		{
-			return String.Format(RAMSTRINGFORMAT, (ram / (int)DENOMINATION).ToString(RAMFLOATFORMAT));
+			return (ram / (int)DENOMINATION).ToString(RAMFLOATFORMAT);
 		}
 
 		public static string DateAndTime(DateTime time)
