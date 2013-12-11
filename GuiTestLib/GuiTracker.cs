@@ -203,7 +203,9 @@ namespace GuiTestLib
 			foreach (ResourceSnapshot rs in _resourceusage.Snapshots)
 			{
 				sb.Append(Format.Duration(rs.TimeStamp - _starttime)).Append("\t");
-				sb.Append(Format.Cpu(rs.Cpu, true)).Append("\t").Append(Format.Ram(rs.Ram)).Append("\t\n");
+				sb.Append(Format.Cpu(rs.Cpu, true)).Append("\t").Append(Format.Ram(rs.Ram));
+				if (rs.Name != string.Empty) { sb.Append("\t").Append(rs.Name); }
+				sb.Append("\n");
 			}
 
 			return sb.ToString();

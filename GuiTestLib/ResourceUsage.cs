@@ -63,11 +63,12 @@ namespace GuiTestLib
 
 		private float getCurrentCpuUsage() { return _cpuCounter.NextValue(); }
 		private float getAllocatedRAM() { return (float)GC.GetTotalMemory(true); }
-		 
-		public void TakeSnapshot()
+		
+		public void TakeSnapshot() { TakeSnapshot(string.Empty); }
+		public void TakeSnapshot(string name)
 		{
 			//_latest_snapshot = new ResourceSnapshot(_base, _count, DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
-			_latest_snapshot = new ResourceSnapshot(null, _count, DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
+			_latest_snapshot = new ResourceSnapshot(null, _count, name, DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
 			_snapshots.Add(_latest_snapshot);
 			_count++;
 

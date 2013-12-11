@@ -121,6 +121,8 @@ namespace GraphMakerLite
 					}
 				}
 			}
+
+			//Destroy?
 		}
 	}
 
@@ -214,6 +216,9 @@ namespace GraphMakerLite
 			switch (framework)
 			{
 			case "Mono-Gtk":
+				retval = "Mono - Gtk (compiled in .net)";
+				break;
+			case "Mono-Gtk2":
 				retval = "Mono - Gtk";
 				break;
 			case "Mono-Win":
@@ -224,6 +229,9 @@ namespace GraphMakerLite
 				break;
 			case "Dnet-Gtk":
 				retval = ".net - Gtk";
+				break;
+			case "Dnet-Gtk2":
+				retval = ".net - Gtk (compiled in Mono)";
 				break;
 			case "Dnet-Win":
 				retval = ".net - Winforms";
@@ -245,20 +253,26 @@ namespace GraphMakerLite
 			case "Mono-Gtk":
 				retval = "#0000ff";
 				break;
-			case "Mono-Win":
-				retval = "#000088";
+			case "Mono-Gtk2":
+				retval = "#0000ff";
 				break;
-			case "Mono-Wpf":
+			case "Mono-Win":
 				retval = "#8888ff";
 				break;
+			case "Mono-Wpf":
+				retval = "#0000aa";
+				break;
 			case "Dnet-Gtk":
-				retval = "#880000";
+				retval = "#ff8888";
+				break;
+			case "Dnet-Gtk2":
+				retval = "#ff8888";
 				break;
 			case "Dnet-Win":
 				retval = "#ff0000";
 				break;
 			case "Dnet-Wpf":
-				retval = "#ff8888";
+				retval = "#aa0000";
 				break;
 			}
 

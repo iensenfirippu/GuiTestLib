@@ -8,6 +8,7 @@ namespace GuiTestLib
 		//private ResourceSnapshot _baseline;
 		
 		private int _index;
+		private string _name;
 		private DateTime _time;
 		private TimeSpan _runtime;
 		private float _cpu;			// in %
@@ -16,10 +17,13 @@ namespace GuiTestLib
 		//private float _ramusage;	// in B
 		
 		public ResourceSnapshot(DateTime time, float cpu, float ram) : this(null, -1, time, cpu, ram) {}
-		public ResourceSnapshot(ResourceSnapshot baseline, int index, DateTime time, float cpu, float ram)
+		public ResourceSnapshot(ResourceSnapshot baseline, int index, DateTime time, float cpu, float ram) :
+			this(baseline, index, string.Empty, time, cpu, ram) {}
+		public ResourceSnapshot(ResourceSnapshot baseline, int index, String name, DateTime time, float cpu, float ram)
 		{
 			//_baseline = baseline;
 			_index = index;
+			_name = name;
 			
 			_time = time;
 			if (baseline != null) { _runtime = time - baseline.TimeStamp; }
@@ -36,6 +40,7 @@ namespace GuiTestLib
 		}
 		
 		public int Index { get { return _index; } }
+		public string Name { get { return _name; } }
 		public DateTime TimeStamp { get { return _time; } }
 		public TimeSpan RunTime { get { return _runtime; } }
 		public float Cpu { get { return _cpu; } }

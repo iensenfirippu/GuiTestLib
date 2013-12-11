@@ -12,7 +12,7 @@ namespace GuiTestLib
 		private const string RAMSTRINGFORMAT = "{0}KB";
 		private const string CPUFLOATFORMAT = "##0.##";
 		private const string CPUFLOATFORMAT_LONG = "00.00000";
-		private const string RAMFLOATFORMAT = "##0.###";
+		private const string RAMFLOATFORMAT = "0000.0000";
 
 		private const string DATEFORMAT = "yy-MM-dd HH:mm:ss";
 		private const string DURATIONFORMAT = "#0.0#";
@@ -45,7 +45,11 @@ namespace GuiTestLib
 		public static string Duration(TimeSpan duration, bool shortformat)
 		{
 			if (shortformat) { return duration.TotalSeconds.ToString(DURATIONFORMAT); }
-			else { return duration.TotalSeconds.ToString(DURATIONFORMAT_LONG); }
+			else
+			{
+				if (duration.TotalSeconds >= 0) { return duration.TotalSeconds.ToString(DURATIONFORMAT_LONG); }
+				else { return DURATIONFORMAT_LONG; }
+			}
 		}
 
 		public enum ByteDenomination
