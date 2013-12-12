@@ -23,13 +23,12 @@ namespace GuiTestLib
 		private DateTime _endtime;
 		private TimeSpan _executiontime;
 
-		/*public GuiTracker(string fromstring)
-		{
-			Regex.
-		}*/
-
 		public GuiTracker(string application, Framework framework, Toolkit toolkit)
 		{
+			_starttime = DateTime.Now;
+			//_endtime = null;
+			_executiontime = TimeSpan.Zero;
+
 			_random = new GuiTestLib.Random();
 			_resourceusage = new ResourceUsage(framework);
 			_timer = new Timer(TICKTIME);
@@ -38,10 +37,6 @@ namespace GuiTestLib
 			_application = application;
 			_framework = framework;
 			_toolkit = toolkit;
-
-			_starttime = DateTime.Now;
-			//_endtime = null;
-			_executiontime = TimeSpan.Zero;
 			
 			_timer.Start();	
 		}
@@ -58,16 +53,15 @@ namespace GuiTestLib
 		public void Stop()
 		{
 			_timer.Stop();
-			_resourceusage.Stop();
+			bool error = _resourceusage.Stop();
 			_random.Disable();
 			_endtime = DateTime.Now;
 			_executiontime = _endtime - _starttime;
 
-			WriteToFile();
-			//WriteToXml();
+			WriteToFile(error);
 		}
 
-		public void WriteToFile()
+		public void WriteToFile(bool error)
 		{
 			string savedirectory = GetSaveDirectory();
 
@@ -77,7 +71,9 @@ namespace GuiTestLib
 			// Save the file
 			for (int i = 1; i < 50; i++)
 			{
-				string filepath = savedirectory + "run" + i.ToString("00") + ".dat";
+				string filepath = savedirectory;
+				if (error) { filepath += "error"; } else { filepath += "run";}
+				filepath += i.ToString("00") + ".dat";
 				if (!File.Exists(filepath))
 				{
 					File.WriteAllText(filepath, content);
@@ -85,45 +81,6 @@ namespace GuiTestLib
 				}
 			}
 		}
-
-		/*public void WriteToXml()
-		{
-			string savedirectory = GetSaveDirectory();
-			XmlSerializer serializer = new XmlSerializer(typeof(GuiTracker));
-			//XmlWriter writer = XmlWriter.Create
-
-			// Save the file
-			for (int i = 1; i < 50; i++)
-			{
-				string filepath = savedirectory + "values" + i.ToString("00") + ".xml";
-				if (!File.Exists(filepath))
-				{
-					using (Stream stream = new FileStream(filepath, FileMode.OpenOrCreate))
-					{
-						serializer.Serialize(stream, this);
-					}
-					i = 50;
-				}
-			}
-		}
-
-		public static List<GuiTracker> ReadFromXml(string loaddirectory)
-		{
-			List<GuiTracker> trackers = new List<GuiTracker>();
-			XmlSerializer serializer = new XmlSerializer(typeof(GuiTracker));
-
-			// Save the file
-			foreach (string filepath in Directory.GetFiles(loaddirectory))
-			{
-				using (Stream stream = new FileStream(filepath, FileMode.Open))
-				{
-					// Call the Deserialize method to restore the object's state.
-					trackers.Add((GuiTracker)serializer.Deserialize(stream));
-				}
-			}
-
-			return trackers;
-		}*/
 
 		public string GetSaveDirectory()
 		{
@@ -138,45 +95,6 @@ namespace GuiTestLib
 			if (!Directory.Exists(savedirectory)) { Directory.CreateDirectory(savedirectory); }
 			return savedirectory;
 		}
-
-		/*public override string ToString()
-		{
-			StringBuilder sb = new StringBuilder();
-
-			sb.Append("application=").Append(_application).Append("\n");
-			sb.Append("framework=").Append(_framework).Append("\n");
-			sb.Append("toolkit=").Append(_toolkit).Append("\n");
-			sb.Append("starttime=").Append(_starttime.ToString()).Append("\n");
-			sb.Append("endtime=").Append(_endtime.ToString()).Append("\n");
-			sb.Append("executiontime=").Append(_executiontime.ToString()).Append("\n");
-
-			foreach (ResourceSnapshot rs in _resourceusage.Snapshots)
-			{
-				sb.Append((rs.TimeStamp - _starttime)).Append("\t");
-				sb.Append(Format.Cpu(rs.Cpu, true)).Append("\t").Append(rs.Ram).Append("\t\n");
-			}
-
-			return sb.ToString();
-		}
-
-		public static GuiTracker FromString(string guitrackerstring)
-		{
-			GuiTracker tracker = new GuiTracker ();
-
-			System.String.re
-
-			tracker._application = "";
-			tracker._framework = "";
-			tracker._toolkit = "";
-			tracker._starttime = "";
-			tracker._endtime = "";
-			tracker._executiontime = "";
-
-			tracker._ = "";
-			tracker._application = "";
-
-			return tracker;
-		}*/
 
 		public override string ToString()
 		{

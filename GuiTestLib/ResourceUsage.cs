@@ -9,10 +9,8 @@ namespace GuiTestLib
 	public class ResourceUsage
 	{		
 		private PerformanceCounter _cpuCounter;
-		
-		//private int _pointer = 0;
+
 		private int _count = 0;
-		//private ResourceSnapshot _base;
 
 		private List<ResourceSnapshot> _snapshots;
 
@@ -25,18 +23,12 @@ namespace GuiTestLib
 		public ResourceUsage(GuiTracker.Framework framework)
 		{
 			_cpuCounter = new PerformanceCounter();
-
-			// Checking for overall CPU usage
-			//_cpuCounter.CategoryName = "Processor";
-			//_cpuCounter.CounterName = "% Processor Time";
-			//_cpuCounter.InstanceName = "_Total";
+			_snapshots = new List<ResourceSnapshot>();
 
 			// Checking for process CPU usage
 			_cpuCounter.CategoryName = "Process";
 			_cpuCounter.CounterName = "% Processor Time";
 			// Get process by id in mono, or name in .net
-			//if (Type.GetType("Mono.Runtime") != null) // official code for checking for Mono runtime, from the mono developers. (didn't work)
-			//if (framework == GuiTracker.Framework.Mono)
 			if (Environment.OSVersion.Platform == PlatformID.Unix || 
 			    Environment.OSVersion.Platform == PlatformID.MacOSX)
 			{
@@ -46,50 +38,34 @@ namespace GuiTestLib
 			{
 				_cpuCounter.InstanceName = Process.GetCurrentProcess().ProcessName;
 			}
+			TakeSnapshot("sleep start", true);
+			Thread.Sleep(1000);
+			TakeSnapshot("sleep end", true);
 
 			// first value returned is always 0, so we run NextValue once and sleep for a second to ready the performancecounter.				
 			_cpuCounter.NextValue();
-			Thread.Sleep(1000);
-
-			/*_mincpu_snapshot = new ResourceSnapshot(DateTime.MinValue, float.MaxValue, float.MaxValue);
-			_minram_snapshot = _mincpu_snapshot;
-			_maxcpu_snapshot = new ResourceSnapshot(DateTime.MinValue, float.MinValue, float.MinValue);
-			_maxram_snapshot = _maxcpu_snapshot;*/
-			
-			//_base = new ResourceSnapshot(DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
-			_snapshots = new List<ResourceSnapshot>();
-			TakeSnapshot();
+			TakeSnapshot("test start");
 		}
 
 		private float getCurrentCpuUsage() { return _cpuCounter.NextValue(); }
 		private float getAllocatedRAM() { return (float)GC.GetTotalMemory(true); }
 		
-		public void TakeSnapshot() { TakeSnapshot(string.Empty); }
-		public void TakeSnapshot(string name)
+		public void TakeSnapshot() { TakeSnapshot(string.Empty, false); }
+		public void TakeSnapshot(string name) { TakeSnapshot(name, false); }
+		public void TakeSnapshot(string name, bool ignorecpu)
 		{
-			//_latest_snapshot = new ResourceSnapshot(_base, _count, DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
-			_latest_snapshot = new ResourceSnapshot(null, _count, name, DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM());
+			if (ignorecpu) { _latest_snapshot = new ResourceSnapshot(null, _count, name, DateTime.Now, 0, getAllocatedRAM()); }
+			else { _latest_snapshot = new ResourceSnapshot(null, _count, name, DateTime.Now, getCurrentCpuUsage(), getAllocatedRAM()); }
+
 			_snapshots.Add(_latest_snapshot);
 			_count++;
 
-			/*if (_count == 1)
-			{
-				_mincpu_snapshot = _latest_snapshot;
-				_minram_snapshot = _latest_snapshot;
-				_maxcpu_snapshot = _latest_snapshot;
-				_maxram_snapshot = _latest_snapshot;
-			}
-			else
-			{*/
-			// Consider moving to Stop()
 			if (_latest_snapshot.Cpu < CpuMin) { _mincpu_snapshot = _latest_snapshot; }
 			if (_latest_snapshot.Ram < RamMin) { _minram_snapshot = _latest_snapshot; }
 			if (_latest_snapshot.Cpu > CpuMax) { _maxcpu_snapshot = _latest_snapshot; }
 			if (_latest_snapshot.Ram > RamMax) { _maxram_snapshot = _latest_snapshot; }
-			//}
 		}
 
-		//public ResourceSnapshot Base { get { return _base; } }
 		public List<ResourceSnapshot> Snapshots { get { return _snapshots; } }
 		public float Cpu { get { if (_latest_snapshot != null) { return _latest_snapshot.Cpu; } else { return 0; } } }
 		public float Ram { get { if (_latest_snapshot != null) { return _latest_snapshot.Ram; } else { return 0; } } }
@@ -122,29 +98,18 @@ namespace GuiTestLib
 			}
 		}
 
-		/*public ResourceSnapshot GetNext()
+		public bool Stop()
 		{
-			_pointer++;
-			if (_pointer < (_snapshots.Count - 1))
-			{
-				return _snapshots[_pointer];
-			}
-			else
-			{
-				return null;
-			}
-		}*/
-
-		public void Stop()
-		{
-			TakeSnapshot();
+			bool error = false;
+			TakeSnapshot("test end");
 			if (Environment.ProcessorCount > 1)
 			{
 				foreach (ResourceSnapshot rs in _snapshots)
 				{
-					rs.RecalculateCpu();
+					if (rs.RecalculateCpu()) { error = true; }
 				}
 			}
+			return error;
 		}
 	}
 }
