@@ -41,7 +41,7 @@ namespace GuiTestLib
 			
 			bool error = false;
 			if (_cpu < 0) { error = true; }
-			if (_cpu > 100) { error = true; }
+			else if (_cpu > 100) { error = true; }
 			return error;
 		}
 	}

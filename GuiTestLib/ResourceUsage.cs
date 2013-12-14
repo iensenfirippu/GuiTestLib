@@ -38,12 +38,16 @@ namespace GuiTestLib
 			{
 				_cpuCounter.InstanceName = Process.GetCurrentProcess().ProcessName;
 			}
+
+			// We have to sleep for a second in order for the performancecounter to get ready.	
 			TakeSnapshot("sleep start", true);
 			Thread.Sleep(1000);
 			TakeSnapshot("sleep end", true);
 
-			// first value returned is always 0, so we run NextValue once and sleep for a second to ready the performancecounter.				
+			// First value returned is always 0, so we run NextValue once.
 			_cpuCounter.NextValue();
+
+			// Take the first snapshot.
 			TakeSnapshot("test start");
 		}
 
@@ -101,14 +105,15 @@ namespace GuiTestLib
 		public bool Stop()
 		{
 			bool error = false;
+			// Take the last snapshot
 			TakeSnapshot("test end");
-			if (Environment.ProcessorCount > 1)
-			{
+			//if (Environment.ProcessorCount > 1)
+			//{
 				foreach (ResourceSnapshot rs in _snapshots)
 				{
 					if (rs.RecalculateCpu()) { error = true; }
 				}
-			}
+			//}
 			return error;
 		}
 	}
